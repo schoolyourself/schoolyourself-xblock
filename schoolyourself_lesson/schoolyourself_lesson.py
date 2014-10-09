@@ -65,21 +65,23 @@ class SchoolYourselfLessonXBlock(XBlock):
       The primary view of the SchoolYourselfLessonXBlock, shown to students
       when viewing courses.
       """
-      # Construct the URL we're going to hit:
+      # Construct the URL we're going to stuff into the iframe once
+      # it gets launched:
       url_params = urllib.urlencode({"id": self.module_id})
       iframe_url = "%s?%s" % (self.embed_url, url_params)
 
+      # Now actually render the fragment, which is just a button with
+      # some JS code that handles the click event on that button.
       html = self.resource_string("static/html/schoolyourself_lesson.html")
       fragment = Fragment(html.format(self=self, iframe_url=iframe_url))
 
-      # TODO(jjl): Add these by URL instead, since it's common to all
-      # usages of the XBlock?
-      fragment.add_css(self.resource_string("static/css/sylib.css"))
-      fragment.add_css(self.resource_string(
-          "static/css/schoolyourself_lesson.css"))
-      fragment.add_javascript(
-        self.resource_string("static/js/sylib.js"))
+      # Load the common JS/CSS libraries:
+      fragment.add_css_url(
+        self.runtime.local_resource_url(self, "public/sylib.css"))
+      fragment.add_javascript_url(
+        self.runtime.local_resource_url(self, "public/sylib.js"))
 
+      # And finally the embedded HTML/JS code:
       fragment.add_javascript(self.resource_string(
           "static/js/schoolyourself_lesson.js"))
       fragment.initialize_js('SchoolYourselfLessonXBlock')
