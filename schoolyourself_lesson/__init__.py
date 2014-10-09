@@ -1,0 +1,1 @@
+from .schoolyourself_lesson import SchoolYourselfLessonXBlock
