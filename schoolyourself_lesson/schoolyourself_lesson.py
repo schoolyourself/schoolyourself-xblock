@@ -70,21 +70,33 @@ class SchoolYourselfLessonXBlock(XBlock):
       iframe_url = "%s?%s" % (self.embed_url, url_params)
 
       html = self.resource_string("static/html/schoolyourself_lesson.html")
-      fragment = Fragment(html.format(self=self, url=iframe_url))
+      fragment = Fragment(html.format(self=self, iframe_url=iframe_url))
 
-      #fragment.add_css(self.resource_string("static/css/schoolyourself-lesson.css"))
-      #fragment.add_javascript(self.resource_string("static/js/src/schoolyourself-lesson.js"))
-      #fragment.initialize_js('SchoolYourselfLessonXBlock')
+      # TODO(jjl): Add these by URL instead, since it's common to all
+      # usages of the XBlock?
+      fragment.add_css(self.resource_string("static/css/sylib.css"))
+      fragment.add_css(self.resource_string(
+          "static/css/schoolyourself_lesson.css"))
+      fragment.add_javascript(
+        self.resource_string("static/js/sylib.js"))
+
+      fragment.add_javascript(self.resource_string(
+          "static/js/schoolyourself_lesson.js"))
+      fragment.initialize_js('SchoolYourselfLessonXBlock')
       return fragment
 
 
     @staticmethod
     def workbench_scenarios():
-        """A canned scenario for display in the workbench."""
-        return [
-            ("SchoolYourselfLessonXBlock",
-             """<vertical_demo>
-                <schoolyourself_lesson module_id="geometry/lines_rays" player_type="module"/>
-                </vertical_demo>
-             """),
+      """A canned scenario for display in the workbench."""
+      return [
+        ("SchoolYourselfLessonXBlock",
+         """\
+            <vertical_demo>
+              <schoolyourself_lesson
+                  module_id="geometry/lines_rays"
+                  player_type="module"
+              />
+            </vertical_demo>
+         """),
         ]
