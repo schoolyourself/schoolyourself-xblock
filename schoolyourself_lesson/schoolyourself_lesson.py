@@ -23,6 +23,7 @@ class SchoolYourselfLessonXBlock(XBlock):
       help=("The full ID of the module as it would appear on "
             "schoolyourself.org, such as 'geometry/lines_rays'."),
       scope=Scope.settings,
+      default="intro/intro_module",
       display_name="SY Module ID",
       enforce_type=True)
 
@@ -32,6 +33,7 @@ class SchoolYourselfLessonXBlock(XBlock):
             "the iframe URL that we end up pointing to."),
       scope=Scope.settings,
       display_name="Type",
+      default="module",
       enforce_type=True,
       values=[{"display_name": "Module", "value": "module"},
                {"display_name": "Review", "value": "review"}])
@@ -86,6 +88,42 @@ class SchoolYourselfLessonXBlock(XBlock):
           "static/js/schoolyourself_lesson.js"))
       fragment.initialize_js('SchoolYourselfLessonXBlock')
       return fragment
+
+    def studio_view(self, context=None):
+      """
+      This is the view that content authors will see when they click on the
+      "Edit" button in Studio. It is a form that lets them type in two fields:
+      module ID and player type.
+
+      TODO(jjl): Is there a better way to generate this page, based on the
+      Field definitions?
+      """
+      # TODO(jjl): Use Mako templates instead of this. It'll make things
+      # (like security) easier down the road too.
+      html = self.resource_string("static/html/schoolyourself_lesson_edit.html")
+      fragment = Fragment(html.format(module_id=self.module_id,
+                                      player_type=self.player_type))
+
+      fragment.add_javascript(
+        self.resource_string("static/js/schoolyourself_lesson_edit.js"))
+      fragment.initialize_js("SchoolYourselfLessonEditor")
+      return fragment
+
+
+    @XBlock.json_handler
+    def studio_submit(self, data, suffix=''):
+      """
+      This is the handler that the form in student_view() calls when
+      new data is inputted.
+      """
+      self.module_id = data.get("module_id", "intro/intro_module")
+      player_type = data.get("player_type", "module")
+      if player_type != "module" and player_type != "review":
+        player_type = "module"
+      self.player_type = player_type
+
+      return { "module_id": self.module_id,
+               "player_type": self.player_type }
 
 
     @staticmethod
