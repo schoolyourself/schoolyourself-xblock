@@ -8,7 +8,7 @@ from mako.template import Template
 from mako.lookup import TemplateLookup
 
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String
+from xblock.fields import Scope, Integer, String, Boolean, Float
 from xblock.fragment import Fragment
 
 
@@ -21,7 +21,6 @@ class SchoolYourselfLessonXBlock(XBlock):
     topic being shown.
     """
     has_children = False
-    has_score = True
 
     module_id = String(
       help=("The full ID of the module as it would appear on "
@@ -41,6 +40,18 @@ class SchoolYourselfLessonXBlock(XBlock):
       enforce_type=True,
       values=[{"display_name": "Module", "value": "module"},
               {"display_name": "Review", "value": "review"}])
+
+    has_score = Boolean(
+      help="Whether this block participates in the course grade.",
+      scope=Scope.settings,
+      default=True,
+      display_name="Has score")
+
+    weight = Float(
+      help="The contribution of this block to the score.",
+      scope=Scope.settings,
+      default=1.0,
+      display_name="Weight")
 
     embed_url = String(
       help=("The base URL that the iframes will be pointing to. Do not put "
@@ -96,6 +107,11 @@ class SchoolYourselfLessonXBlock(XBlock):
         self.runtime.local_resource_url(self, "public/sylib.css"))
       fragment.add_javascript_url(
         self.runtime.local_resource_url(self, "public/sylib.js"))
+
+      # An example of grading:
+      # self.runtime.publish(self, "grade",
+      #                     { "value": 70,
+      #                       "max_value": 100 })
 
       # And finally the embedded HTML/JS code:
       fragment.add_javascript(self.resource_string(
