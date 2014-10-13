@@ -54,9 +54,10 @@ class SchoolYourselfLessonXBlock(XBlock):
       help=("This is the key that we use to verify signed data coming "
             "from the School Yourself server about the user. This typically "
             "includes the user ID and mastery levels of the topic presented "
-            "in this XBlock."),
+            "in this lesson."),
       scope=Scope.content,
       display_name="Shared key",
+      default="",
       enforce_type=True)
 
 
@@ -108,13 +109,11 @@ class SchoolYourselfLessonXBlock(XBlock):
       This is the view that content authors will see when they click on the
       "Edit" button in Studio. It is a form that lets them type in two fields:
       module ID and player type.
-
-      TODO(jjl): Is there a better way to generate this page, based on the
-      Field definitions?
       """
       context = {
         "module_id": self.module_id,
-        "player_type": self.player_type
+        "player_type": self.player_type,
+        "shared_key": self.shared_key,
       }
 
       fragment = Fragment(self.render_template("studio_view.html", context))
@@ -126,7 +125,7 @@ class SchoolYourselfLessonXBlock(XBlock):
 
 
     @XBlock.json_handler
-    def studio_submit(self, data, suffix=''):
+    def studio_submit(self, data, suffix=""):
       """
       This is the handler that the form in student_view() calls when
       new data is inputted.
@@ -137,8 +136,12 @@ class SchoolYourselfLessonXBlock(XBlock):
         player_type = "module"
       self.player_type = player_type
 
+      if "shared_key" in data:
+        self.shared_key = data.get("shared_key")
+
       return { "module_id": self.module_id,
-               "player_type": self.player_type }
+               "player_type": self.player_type,
+               "shared_key": self.shared_key }
 
 
     @staticmethod
