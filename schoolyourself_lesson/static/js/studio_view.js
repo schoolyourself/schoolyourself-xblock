@@ -1,4 +1,4 @@
-function SchoolYourselfLessonEditor(runtime, element) {
+function SchoolYourselfStudioView(runtime, element) {
   $('.save-button').bind('click', function() {
     var data = {
       'module_id': $('#module-id').val(),

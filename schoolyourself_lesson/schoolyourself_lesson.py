@@ -1,7 +1,11 @@
 """An XBlock that displays School Yourself lessons and may publish grades."""
 
+import os
 import pkg_resources
 import urllib
+
+from mako.template import Template
+from mako.lookup import TemplateLookup
 
 from xblock.core import XBlock
 from xblock.fields import Scope, Integer, String
@@ -36,7 +40,7 @@ class SchoolYourselfLessonXBlock(XBlock):
       default="module",
       enforce_type=True,
       values=[{"display_name": "Module", "value": "module"},
-               {"display_name": "Review", "value": "review"}])
+              {"display_name": "Review", "value": "review"}])
 
     embed_url = String(
       help=("The base URL that the iframes will be pointing to. Do not put "
@@ -62,6 +66,14 @@ class SchoolYourselfLessonXBlock(XBlock):
       return data.decode("utf8")
 
 
+    def render_template(self, template_name, context={}):
+      """Another handy helper for rendering Mako templates from our kit."""
+
+      template = Template(self.resource_string(os.path.join("templates",
+                                                            template_name)))
+      return template.render_unicode(**context)
+
+
     def student_view(self, context=None):
       """
       The primary view of the SchoolYourselfLessonXBlock, shown to students
@@ -70,12 +82,13 @@ class SchoolYourselfLessonXBlock(XBlock):
       # Construct the URL we're going to stuff into the iframe once
       # it gets launched:
       url_params = urllib.urlencode({"id": self.module_id})
-      iframe_url = "%s?%s" % (self.embed_url, url_params)
+      context = {
+        "iframe_url": "%s?%s" % (self.embed_url, url_params)
+      }
 
       # Now actually render the fragment, which is just a button with
       # some JS code that handles the click event on that button.
-      html = self.resource_string("static/html/schoolyourself_lesson.html")
-      fragment = Fragment(html.format(self=self, iframe_url=iframe_url))
+      fragment = Fragment(self.render_template("student_view.html", context))
 
       # Load the common JS/CSS libraries:
       fragment.add_css_url(
@@ -85,9 +98,10 @@ class SchoolYourselfLessonXBlock(XBlock):
 
       # And finally the embedded HTML/JS code:
       fragment.add_javascript(self.resource_string(
-          "static/js/schoolyourself_lesson.js"))
-      fragment.initialize_js('SchoolYourselfLessonXBlock')
+          "static/js/student_view.js"))
+      fragment.initialize_js("SchoolYourselfStudentView")
       return fragment
+
 
     def studio_view(self, context=None):
       """
@@ -98,15 +112,16 @@ class SchoolYourselfLessonXBlock(XBlock):
       TODO(jjl): Is there a better way to generate this page, based on the
       Field definitions?
       """
-      # TODO(jjl): Use Mako templates instead of this. It'll make things
-      # (like security) easier down the road too.
-      html = self.resource_string("static/html/schoolyourself_lesson_edit.html")
-      fragment = Fragment(html.format(module_id=self.module_id,
-                                      player_type=self.player_type))
+      context = {
+        "module_id": self.module_id,
+        "player_type": self.player_type
+      }
+
+      fragment = Fragment(self.render_template("studio_view.html", context))
 
       fragment.add_javascript(
-        self.resource_string("static/js/schoolyourself_lesson_edit.js"))
-      fragment.initialize_js("SchoolYourselfLessonEditor")
+        self.resource_string("static/js/studio_view.js"))
+      fragment.initialize_js("SchoolYourselfStudioView")
       return fragment
 
 

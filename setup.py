@@ -63,5 +63,6 @@ setup(
             'schoolyourself_lesson = schoolyourself_lesson:SchoolYourselfLessonXBlock',
         ]
     },
-    package_data=package_data("schoolyourself_lesson", ["static", "public"]),
+    package_data=package_data("schoolyourself_lesson",
+                              ["static", "public", "templates"]),
 )
