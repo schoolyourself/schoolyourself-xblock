@@ -53,10 +53,10 @@ class SchoolYourselfLessonXBlock(XBlock):
       default=1.0,
       display_name="Weight")
 
-    embed_url = String(
+    base_url = String(
       help=("The base URL that the iframes will be pointing to. Do not put "
             "URL params here -- those get added by the view."),
-      default="https://dev.schoolyourself.org/page/player",
+      default="https://dev.schoolyourself.org/page",
       scope=Scope.content,
       display_name="Base URL",
       enforce_type=True)
@@ -130,8 +130,13 @@ class SchoolYourselfLessonXBlock(XBlock):
       if user_id:
         url_params["partner_user_id"] = user_id
 
+      # Set up the screenshot URL:
+      screenshot_url = "%s/screenshot/%s" % (self.base_url, self.module_id)
+
       context = {
-        "iframe_url": "%s?%s" % (self.embed_url, urllib.urlencode(url_params))
+        "iframe_url": "%s/player?%s" % (self.base_url,
+                                       urllib.urlencode(url_params)),
+        "screenshot_url": screenshot_url
       }
 
       # Now actually render the fragment, which is just a button with
@@ -152,6 +157,8 @@ class SchoolYourselfLessonXBlock(XBlock):
       # And finally the embedded HTML/JS code:
       fragment.add_javascript(self.resource_string(
           "static/js/student_view.js"))
+      fragment.add_css(self.resource_string(
+          "static/css/student_view.css"))
       fragment.initialize_js("SchoolYourselfStudentView")
       return fragment
 

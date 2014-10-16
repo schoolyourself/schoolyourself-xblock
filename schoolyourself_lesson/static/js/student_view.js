@@ -1,7 +1,7 @@
 function SchoolYourselfStudentView(runtime, element) {
   var viewport = schoolyourself.PlayerViewportBuilder.insert(1024, 768);
   $(function ($) {
-    $('button', element).click(function(eventObject) {
+    $('.schoolyourself-lesson-player', element).click(function(eventObject) {
       viewport.openFrame(this.getAttribute('data-url'));
     });
   });

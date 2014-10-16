@@ -1,0 +1,51 @@
+.schoolyourself-lesson-player {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.schoolyourself-play-button {
+  background: #c55c55;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  height: 43px;
+  font-size: 25px;
+  border-radius: 8px;
+  margin: auto;
+  cursor: pointer;
+  cursor: hand;
+
+  transition: background 100ms ease-in;
+  -webkit-transition: background 100ms ease-in;
+  -moz-transition: background 100ms ease-in;
+  -ms-transition: background 100ms ease-in;
+  -o-transition: background 100ms ease-in;
+}
+
+.schoolyourself-lesson-player:hover .schoolyourself-play-button {
+  background: #b53c35;
+}
+
+.schoolyourself-arrow-container {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+}
+
+.schoolyourself-arrow {
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 20px solid #fff;
+}
