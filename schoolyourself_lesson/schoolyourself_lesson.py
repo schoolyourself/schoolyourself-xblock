@@ -72,6 +72,37 @@ class SchoolYourselfLessonXBlock(XBlock):
       enforce_type=True)
 
 
+    def get_student_id(self):
+      """This is a helper that retrieves the student ID. We need this
+      method because the ID might be different depending on whether we
+      are running in the LMS or in the XBlock workbench. For more
+      information, see
+      https://groups.google.com/forum/#!topic/edx-code/ryPw7a-tK_g
+      for a discussion on this topic.
+
+      If no student ID is available for some reason, we return None.
+
+      Returns:
+          A unicode string.
+      """
+      if hasattr(self, "xmodule_runtime"):
+        return self.xmodule_runtime.anonymous_student_id
+
+      # The following lines give an alternate way of getting a user_id
+      # in the case of studio or workbench. Currently, studio will
+      # just give back an ID of "student", whereas workbench lets you
+      # set it in a URL param. In any case, any module that is not being
+      # actually viewed by a student should send the user ID "debug"
+      # back to the SY servers. If you want to change that behavior,
+      # uncomment the following 3 lines.
+      #
+      # if self.scope_ids.user_id is None:
+      #   return None
+      # return unicode(self.scope_ids.user_id)
+
+      return "debug"
+
+
     def resource_string(self, path):
       """Handy helper for getting resources from our kit."""
       data = pkg_resources.resource_string(__name__, path)
@@ -93,9 +124,14 @@ class SchoolYourselfLessonXBlock(XBlock):
       """
       # Construct the URL we're going to stuff into the iframe once
       # it gets launched:
-      url_params = urllib.urlencode({"id": self.module_id})
+      url_params = {"id": self.module_id,
+                    "partner": "edx"}
+      user_id = self.get_student_id()
+      if user_id:
+        url_params["partner_user_id"] = user_id
+
       context = {
-        "iframe_url": "%s?%s" % (self.embed_url, url_params)
+        "iframe_url": "%s?%s" % (self.embed_url, urllib.urlencode(url_params))
       }
 
       # Now actually render the fragment, which is just a button with
