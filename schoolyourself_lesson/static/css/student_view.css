@@ -49,3 +49,27 @@
   border-bottom: 10px solid transparent;
   border-left: 20px solid #fff;
 }
+
+.schoolyourself-screenshot {
+  position: relative;
+}
+
+.schoolyourself-screenshot-curtain {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0,0,0,0.25);
+
+  transition: background 100ms ease-in;
+  -webkit-transition: background 100ms ease-in;
+  -moz-transition: background 100ms ease-in;
+  -ms-transition: background 100ms ease-in;
+  -o-transition: background 100ms ease-in;
+}
+
+
+.schoolyourself-lesson-player:hover .schoolyourself-screenshot-curtain {
+  background: rgba(0,0,0,0.2);
+}
