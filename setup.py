@@ -62,6 +62,8 @@ setup(
   entry_points={
     "xblock.v1": [
       "schoolyourself_lesson = schoolyourself_lesson:SchoolYourselfLessonXBlock",
+
+
     ]
   },
   package_data=package_data("schoolyourself_lesson",

@@ -1,15 +1,19 @@
 """An XBlock that displays School Yourself lessons and may publish grades."""
 
+import os
+import pkg_resources
 import urllib
 
+from mako.template import Template
+from mako.lookup import TemplateLookup
+
 from xblock.core import XBlock
-from xblock.fields import Scope, String
+from xblock.fields import Scope, Integer, String, Boolean, Float
 from xblock.fragment import Fragment
 
 from schoolyourself import SchoolYourselfXBlock
 
-
-class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
+class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
     """
     This block renders a launcher button for a School Yourself lesson,
     which is rendered in an iframe. The block transmits the anonymous
@@ -18,7 +22,8 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
     topic being shown.
     """
     has_children = False
-    has_score = False
+    has_score = True
+    weight = 1.0
 
     module_id = String(
       help=("The full ID of the module as it would appear on "
@@ -31,7 +36,7 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
     base_url = String(
       help=("The base URL that the iframes will be pointing to. Do not put "
             "URL params here -- those get added by the view."),
-      default="https://dev.schoolyourself.org/page",
+      default="https://dev.schoolyourself.org/review",
       scope=Scope.content,
       display_name="Base URL",
       enforce_type=True)
@@ -49,12 +54,16 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
 
     def student_view(self, context=None):
       """
-      The primary view of the SchoolYourselfLessonXBlock, shown to students
+      The primary view of the SchoolYourselfReviewXBlock, shown to students
       when viewing courses.
       """
       # Construct the URL we're going to stuff into the iframe once
       # it gets launched:
-      url_params = self.get_partner_url_params()
+      url_params = {"id": self.module_id,
+                    "partner": "edx"}
+      user_id = self.get_student_id()
+      if user_id:
+        url_params["partner_user_id"] = user_id
 
       # Set up the screenshot URL:
       screenshot_url = "%s/screenshot/%s" % (self.base_url, self.module_id)
@@ -89,11 +98,12 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
       return fragment
 
 
+
     @staticmethod
     def workbench_scenarios():
       """A canned scenario for display in the workbench."""
       return [
-        ("SchoolYourselfLessonXBlock",
+        ("SchoolYourselfReviewXBlock",
          """\
             <vertical_demo>
               <schoolyourself_lesson
