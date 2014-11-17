@@ -1,4 +1,4 @@
-"""An XBlock that displays School Yourself lessons and may publish grades."""
+"""An XBlock that displays School Yourself reviews and may publish grades."""
 
 import urllib
 
@@ -11,7 +11,7 @@ from schoolyourself import SchoolYourselfXBlock
 
 class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
     """
-    This block renders a launcher button for a School Yourself lesson,
+    This block renders a launcher button for a School Yourself review,
     which is rendered in an iframe. The block transmits the anonymous
     user ID and has a handler that receives information from School
     Yourself regarding the user's progress and mastery through the
@@ -21,33 +21,6 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
     has_score = True
     weight = 1.0
 
-    module_id = String(
-      help=("The full ID of the module as it would appear on "
-            "schoolyourself.org, such as 'geometry/lines_rays'."),
-      scope=Scope.settings,
-      default="intro/intro_module",
-      display_name="SY Module ID",
-      enforce_type=True)
-
-    base_url = String(
-      help=("The base URL that the iframes will be pointing to. Do not put "
-            "URL params here -- those get added by the view."),
-      default="https://dev.schoolyourself.org/review",
-      scope=Scope.content,
-      display_name="Base URL",
-      enforce_type=True)
-
-    shared_key = String(
-      help=("This is the key that we use to verify signed data coming "
-            "from the School Yourself server about the user. This typically "
-            "includes the user ID and mastery levels of the topic presented "
-            "in this lesson."),
-      scope=Scope.content,
-      display_name="Shared key",
-      default="",
-      enforce_type=True)
-
-
     def student_view(self, context=None):
       """
       The primary view of the SchoolYourselfReviewXBlock, shown to students
@@ -55,18 +28,15 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       """
       # Construct the URL we're going to stuff into the iframe once
       # it gets launched:
-      url_params = {"id": self.module_id,
-                    "partner": "edx"}
-      user_id = self.get_student_id()
-      if user_id:
-        url_params["partner_user_id"] = user_id
+      url_params = self.get_partner_url_params()
 
       # Set up the screenshot URL:
-      screenshot_url = "%s/screenshot/%s" % (self.base_url, self.module_id)
+      screenshot_url = "%s/page/screenshot/%s" % (self.base_url,
+                                                  self.module_id)
 
       context = {
-        "iframe_url": "%s/player?%s" % (self.base_url,
-                                       urllib.urlencode(url_params)),
+        "iframe_url": "%s/review/player?%s" % (self.base_url,
+                                               urllib.urlencode(url_params)),
         "screenshot_url": screenshot_url
       }
 
@@ -80,7 +50,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       fragment.add_javascript_url(
         self.runtime.local_resource_url(self, "public/sylib.js"))
 
-      # An example of grading:
+      # An example of grading. Call this in the postMessage handler.
       # self.runtime.publish(self, "grade",
       #                     { "value": 70,
       #                       "max_value": 100 })

@@ -1,4 +1,4 @@
-"""The base class for School Yourself XBlocks."""
+"""The base class for School Yourself XBlocks (lessons and reviews)."""
 
 import os
 import pkg_resources
@@ -6,17 +6,58 @@ import pkg_resources
 from mako.template import Template
 
 from xblock.core import XBlock
+from xblock.fields import Scope, String
 from xblock.fragment import Fragment
 
 
 class SchoolYourselfXBlock(XBlock):
+    """Common functionality for the School Yourself XBlocks.
+
+    The School Yourself XBlocks (SchoolYourselfLessonXBlock and
+    SchoolYourselfReviewXBlock) are very similar in that both of them
+    show iframes that point to another location.
+
+    The "Lesson" XBlock points the introduction page for one of our
+    lessons and allows them to continue navigating whatever branches
+    they choose to follow until they reach the "end" page for that
+    lesson. These do not contribute to the grade, and the user may
+    actually choose to skip it if they want to.
+
+    The "Review" XBlock points to an adaptive assessment for a given
+    lesson. This DOES participate in the course grade, and requires that
+    users reach a certain mastery level before it shows a message
+    telling them that they can quit. The user may quit at any point
+    and resume later. Note that a user's grade may *decrease* if they
+    master the topic, then come back later and get subsequent
+    questions wrong.
     """
-    This block renders a launcher button for a School Yourself lesson,
-    which is rendered in an iframe. The block transmits the anonymous
-    user ID and has a handler that receives information from School
-    Yourself regarding the user's progress and mastery through the
-    topic being shown.
-    """
+    module_id = String(
+      help=("The full ID of the module as it would appear on "
+            "schoolyourself.org, such as 'geometry/lines_rays'."),
+      scope=Scope.settings,
+      default="intro/intro_module",
+      display_name="SY Module ID",
+      enforce_type=True)
+
+    base_url = String(
+      help=("The base URL that the iframes will be pointing to. Do not put "
+            "URL params here -- those get added by the view."),
+      default="https://dev.schoolyourself.org",
+      scope=Scope.content,
+      display_name="Base URL",
+      enforce_type=True)
+
+    shared_key = String(
+      help=("This is the key that we use to verify signed data coming "
+            "from the School Yourself server about the user. This typically "
+            "includes the user ID and mastery levels of the topic presented "
+            "in this lesson."),
+      scope=Scope.content,
+      display_name="Shared key",
+      default="",
+      enforce_type=True)
+
+
     def get_student_id(self):
       """This is a helper that retrieves the student ID. We need this
       method because the ID might be different depending on whether we
@@ -63,6 +104,10 @@ class SchoolYourselfXBlock(XBlock):
 
 
     def get_partner_url_params(self):
+      """A helper method that generates a dict of URL params that we can
+      append to the end of a URL, containing the partner ID and the
+      user's anonymouse user ID. These are typically transmitted as URL
+      params. in the iframes."""
       url_params = {"id": self.module_id,
                     "partner": "edx"}
       user_id = self.get_student_id()
