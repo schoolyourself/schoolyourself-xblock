@@ -38,12 +38,14 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       context = {
         "iframe_url": "%s/review/player?%s" % (self.base_url,
                                                urllib.urlencode(url_params)),
-        "screenshot_url": screenshot_url
+        "icon_url": self.runtime.local_resource_url(self,
+                                                    "public/review_icon.png")
       }
 
       # Now actually render the fragment, which is just a button with
       # some JS code that handles the click event on that button.
-      fragment = Fragment(self.render_template("student_view.html", context))
+      fragment = Fragment(self.render_template("review_student_view.html",
+                                               context))
 
       # Load the common JS/CSS libraries:
       fragment.add_css_url(

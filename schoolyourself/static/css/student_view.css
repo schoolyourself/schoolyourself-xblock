@@ -1,8 +1,14 @@
+.schoolyourself-container {
+  border: 1px solid #737c95;
+  text-align: center;
+}
+
 .schoolyourself-lesson-player {
   position: relative;
   display: inline-block;
   cursor: pointer;
   cursor: hand;
+  width: 100%;
 }
 
 .schoolyourself-play-button {
@@ -72,4 +78,33 @@
 
 .schoolyourself-lesson-player:hover .schoolyourself-screenshot-curtain {
   background: rgba(0,0,0,0.2);
+}
+
+.schoolyourself-review-box {
+  position: relative;
+  width: 100%;
+  height: 384px;
+  text-align: center;
+}
+
+
+.schoolyourself-review-icon {
+  width: 100px;
+  line-height: 384px;
+  display: inline-block;
+}
+
+.schoolyourself-review-icon > img {
+  vertical-align: middle;
+  width: 100%;
+  opacity: 0.7;
+  transition: opacity 100ms ease-in;
+  -webkit-transition: opacity 100ms ease-in;
+  -moz-transition: opacity 100ms ease-in;
+  -ms-transition: opacity 100ms ease-in;
+  -o-transition: opacity 100ms ease-in;
+}
+
+.schoolyourself-lesson-player:hover .schoolyourself-review-icon > img {
+  opacity: 1;
 }

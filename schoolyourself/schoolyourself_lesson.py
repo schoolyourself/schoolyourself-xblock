@@ -39,7 +39,8 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
 
       # Now actually render the fragment, which is just a button with
       # some JS code that handles the click event on that button.
-      fragment = Fragment(self.render_template("student_view.html", context))
+      fragment = Fragment(self.render_template("lesson_student_view.html",
+                                               context))
 
       # Load the common JS/CSS libraries:
       fragment.add_css_url(
