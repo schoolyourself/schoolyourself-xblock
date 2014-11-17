@@ -28,7 +28,8 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       """
       # Construct the URL we're going to stuff into the iframe once
       # it gets launched:
-      url_params = self.get_partner_url_params()
+      url_params = self.get_partner_url_params(self.shared_key)
+      url_params["module"] = self.module_id
 
       # Set up the screenshot URL:
       screenshot_url = "%s/page/screenshot/%s" % (self.base_url,
@@ -73,7 +74,8 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
          """\
             <vertical_demo>
               <schoolyourself_review
-                  module_id="geometry/lines_rays"
+                  module_id="algebra/multiplication"
+                  shared_key="test"
               />
             </vertical_demo>
          """),

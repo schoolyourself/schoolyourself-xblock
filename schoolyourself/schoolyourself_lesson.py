@@ -24,7 +24,8 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
       """
       # Construct the URL we're going to stuff into the iframe once
       # it gets launched:
-      url_params = self.get_partner_url_params()
+      url_params = self.get_partner_url_params(self.shared_key)
+      url_params["id"] = self.module_id
 
       # Set up the screenshot URL:
       screenshot_url = "%s/page/screenshot/%s" % (self.base_url,

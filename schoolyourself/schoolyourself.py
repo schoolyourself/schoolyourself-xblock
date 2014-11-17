@@ -1,5 +1,6 @@
 """The base class for School Yourself XBlocks (lessons and reviews)."""
 
+import hmac
 import os
 import pkg_resources
 
@@ -103,16 +104,22 @@ class SchoolYourselfXBlock(XBlock):
       return template.render_unicode(**context)
 
 
-    def get_partner_url_params(self):
+    def get_partner_url_params(self, shared_key=None):
       """A helper method that generates a dict of URL params that we can
       append to the end of a URL, containing the partner ID and the
       user's anonymouse user ID. These are typically transmitted as URL
-      params. in the iframes."""
-      url_params = {"id": self.module_id,
-                    "partner": "edx"}
+      params. in the iframes.
+
+      If a shared_key is provided and there is a username to encode,
+      we will sign it with the shared key.
+      """
+      url_params = {"partner": "edx"}
       user_id = self.get_student_id()
       if user_id:
         url_params["partner_user_id"] = user_id
+        if shared_key:
+          url_params["partner_signature"] = hmac.new(str(shared_key),
+                                                     user_id).hexdigest()
 
       return url_params
 
