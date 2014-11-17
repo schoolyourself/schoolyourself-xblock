@@ -1,17 +1,13 @@
 """An XBlock that displays School Yourself lessons and may publish grades."""
 
-import os
-import pkg_resources
 import urllib
 
-from mako.template import Template
-from mako.lookup import TemplateLookup
-
 from xblock.core import XBlock
-from xblock.fields import Scope, Integer, String, Boolean, Float
+from xblock.fields import Scope, String
 from xblock.fragment import Fragment
 
 from schoolyourself import SchoolYourselfXBlock
+
 
 class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
     """
@@ -106,7 +102,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         ("SchoolYourselfReviewXBlock",
          """\
             <vertical_demo>
-              <schoolyourself_lesson
+              <schoolyourself_review
                   module_id="geometry/lines_rays"
               />
             </vertical_demo>

@@ -52,20 +52,19 @@ def package_data(pkg, roots):
 
 
 setup(
-  name="schoolyourself_lesson_xblock",
+  name="schoolyourself_xblock",
   version="0.1",
   description="School Yourself lesson player",
   packages=[
-    "schoolyourself_lesson",
+    "schoolyourself",
   ],
   install_requires=load_requirements("requirements.txt"),
   entry_points={
     "xblock.v1": [
-      "schoolyourself_lesson = schoolyourself_lesson:SchoolYourselfLessonXBlock",
-
-
+      "schoolyourself_lesson = schoolyourself:SchoolYourselfLessonXBlock",
+      "schoolyourself_review = schoolyourself:SchoolYourselfReviewXBlock",
     ]
   },
-  package_data=package_data("schoolyourself_lesson",
+  package_data=package_data("schoolyourself",
                             ["static", "public", "templates"]),
 )
