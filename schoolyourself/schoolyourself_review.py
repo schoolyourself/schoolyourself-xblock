@@ -1,5 +1,6 @@
 """An XBlock that displays School Yourself reviews and may publish grades."""
 
+import hmac
 import urllib
 
 from xblock.core import XBlock
@@ -68,14 +69,36 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
     def handle_grade(self, data, suffix=""):
       """This is the handler that gets called when we receive grades.
 
-      TODO(jjl): Make sure the message is signed.
+      We will verify the message to make sure that it is signed and
+      that the signature is valid. If everything is good, then we'll
+      publish a "grade" event for this module.
       """
-      mastery = data.get("m", None)
-      if not mastery:
+      mastery = data.get("mastery", None)
+      user_id = data.get("user_id", None)
+      signature = data.get("signature", None)
+      if not mastery or not user_id or not signature:
         return
 
+      # Check that the module ID we care about is actually in the data
+      # that was sent.
+      mastery_level = mastery.get(self.module_id, None)
+      if mastery_level is None:
+        return
+
+      # Verify the signature.
+      verifier = hmac.new(str(self.shared_key), user_id)
+      for key in sorted(mastery):
+        verifier.update(key)
+        verifier.update("%.2f" % mastery[key])
+
+      # If the signature is invalid, do nothing.
+      if signature != verifier.hexdigest():
+        return
+
+      # If we got here, then everything checks out and we can submit
+      # a grade for this module.
       self.runtime.publish(self, "grade",
-                           { "value": mastery,
+                           { "value": mastery_level,
                              "max_value": 0.7 })
 
 
