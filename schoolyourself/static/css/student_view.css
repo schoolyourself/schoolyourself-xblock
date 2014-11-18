@@ -1,5 +1,4 @@
 .schoolyourself-container {
-  border: 1px solid #737c95;
   text-align: center;
 }
 
@@ -8,79 +7,35 @@
   display: inline-block;
   cursor: pointer;
   cursor: hand;
-  width: 100%;
+  width: 512px;
+  border: 1px solid #737c95;
+}
+
+.schoolyourself-play-button-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
 }
 
 .schoolyourself-play-button {
-  background: #c55c55;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 60px;
-  height: 43px;
-  font-size: 25px;
-  border-radius: 8px;
-  margin: auto;
-  cursor: pointer;
-  cursor: hand;
-
-  transition: background 100ms ease-in;
-  -webkit-transition: background 100ms ease-in;
-  -moz-transition: background 100ms ease-in;
-  -ms-transition: background 100ms ease-in;
-  -o-transition: background 100ms ease-in;
-}
-
-.schoolyourself-lesson-player:hover .schoolyourself-play-button {
-  background: #b53c35;
-}
-
-.schoolyourself-arrow-container {
-  position: absolute;
-  top: 0;
-  left: 3px;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 20px;
-  height: 20px;
-}
-
-.schoolyourself-arrow {
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-left: 20px solid #fff;
-}
-
-.schoolyourself-screenshot {
-  position: relative;
-}
-
-.schoolyourself-screenshot-curtain {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(255,255,255,0.4);
-
-  transition: background 100ms ease-in;
-  -webkit-transition: background 100ms ease-in;
-  -moz-transition: background 100ms ease-in;
-  -ms-transition: background 100ms ease-in;
-  -o-transition: background 100ms ease-in;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 10px;
+  background: #6eb535;
+  border-radius: 5px;
+  border: 1px solid #a1d775;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #fff;
+  font-size: 15px;
+  width: 150px;
 }
 
 
-.schoolyourself-lesson-player:hover .schoolyourself-screenshot-curtain {
-  background: rgba(255,255,255,0.2);
-}
-
-.schoolyourself-review-box {
+.schoolyourself-review-box, .schoolyourself-lesson-box {
+  font-size: 0;
   position: relative;
   width: 100%;
   height: 384px;
@@ -94,7 +49,8 @@
   -o-transition: opacity 100ms ease-in;
 }
 
-.schoolyourself-lesson-player:hover .schoolyourself-review-box {
+.schoolyourself-lesson-player:hover .schoolyourself-review-box,
+.schoolyourself-lesson-player:hover .schoolyourself-lesson-box {
   opacity: 1;
 }
 
@@ -113,22 +69,23 @@
 
 .schoolyourself-review-icon > img {
   vertical-align: middle;
-  width: 100px;
+  width: 200px;
 }
 
 .schoolyourself-caption {
-  padding: 10px;
   margin-bottom: 20px;
   color: #737c95;
   font-weight: bold;
+  font-size: 24px;
 }
 
 .schoolyourself-caption-button {
   padding: 10px;
-  background: #f0b300;
+  background: #6eb535;
   border-radius: 5px;
-  border: 1px solid #fcd800;
+  border: 1px solid #a1d775;
   font-weight: bold;
   margin-top: 20px;
   color: #fff;
+  font-size: 15px;
 }

@@ -41,7 +41,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
                                               urllib.urlencode(url_params)),
         "module_title": self.module_title,
         "icon_url": self.runtime.local_resource_url(self,
-                                                    "public/review_icon.png")
+                                                    "public/review_icon.jpg")
       }
 
       # Now actually render the fragment, which is just a button with
