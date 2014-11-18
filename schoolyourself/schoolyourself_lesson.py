@@ -65,7 +65,10 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
          """\
             <vertical_demo>
               <schoolyourself_lesson
-                  module_id="geometry/lines_rays"
+                  base_url="https://dev.schoolyourself.org"
+                  module_id="algebra/multiplication"
+                  module_title="Multiplication"
+                  shared_key="test"
               />
             </vertical_demo>
          """),
