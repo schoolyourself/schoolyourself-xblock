@@ -50,10 +50,10 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
 
       # And finally the embedded HTML/JS code:
       fragment.add_javascript(self.resource_string(
-          "static/js/student_view.js"))
+          "static/js/lesson_student_view.js"))
       fragment.add_css(self.resource_string(
           "static/css/student_view.css"))
-      fragment.initialize_js("SchoolYourselfStudentView")
+      fragment.initialize_js("SchoolYourselfLessonStudentView")
       return fragment
 
 

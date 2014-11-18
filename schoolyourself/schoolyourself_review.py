@@ -36,8 +36,8 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
                                                   self.module_id)
 
       context = {
-        "iframe_url": "%s/review/player?%s" % (self.base_url,
-                                               urllib.urlencode(url_params)),
+        "iframe_url": "%s/review/embed?%s" % (self.base_url,
+                                              urllib.urlencode(url_params)),
         "module_title": self.module_title,
         "icon_url": self.runtime.local_resource_url(self,
                                                     "public/review_icon.png")
@@ -54,19 +54,29 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       fragment.add_javascript_url(
         self.runtime.local_resource_url(self, "public/sylib.js"))
 
-      # An example of grading. Call this in the postMessage handler.
-      # self.runtime.publish(self, "grade",
-      #                     { "value": 70,
-      #                       "max_value": 100 })
 
       # And finally the embedded HTML/JS code:
       fragment.add_javascript(self.resource_string(
-          "static/js/student_view.js"))
+          "static/js/review_student_view.js"))
       fragment.add_css(self.resource_string(
           "static/css/student_view.css"))
-      fragment.initialize_js("SchoolYourselfStudentView")
+      fragment.initialize_js("SchoolYourselfReviewStudentView")
       return fragment
 
+
+    @XBlock.json_handler
+    def handle_grade(self, data, suffix=""):
+      """This is the handler that gets called when we receive grades.
+
+      TODO(jjl): Make sure the message is signed.
+      """
+      mastery = data.get("m", None)
+      if not mastery:
+        return
+
+      self.runtime.publish(self, "grade",
+                           { "value": mastery,
+                             "max_value": 0.7 })
 
 
     @staticmethod
@@ -77,6 +87,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
          """\
             <vertical_demo>
               <schoolyourself_review
+                  base_url="http://localhost:9753"
                   module_id="algebra/multiplication"
                   shared_key="test"
               />
