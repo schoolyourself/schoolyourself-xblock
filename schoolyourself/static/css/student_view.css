@@ -66,7 +66,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  background: rgba(0,0,0,0.25);
+  background: rgba(255,255,255,0.4);
 
   transition: background 100ms ease-in;
   -webkit-transition: background 100ms ease-in;
@@ -77,7 +77,7 @@
 
 
 .schoolyourself-lesson-player:hover .schoolyourself-screenshot-curtain {
-  background: rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.2);
 }
 
 .schoolyourself-review-box {
@@ -85,19 +85,8 @@
   width: 100%;
   height: 384px;
   text-align: center;
-}
 
-
-.schoolyourself-review-icon {
-  width: 100px;
-  line-height: 384px;
-  display: inline-block;
-}
-
-.schoolyourself-review-icon > img {
-  vertical-align: middle;
-  width: 100%;
-  opacity: 0.7;
+  opacity: 0.8;
   transition: opacity 100ms ease-in;
   -webkit-transition: opacity 100ms ease-in;
   -moz-transition: opacity 100ms ease-in;
@@ -105,6 +94,41 @@
   -o-transition: opacity 100ms ease-in;
 }
 
-.schoolyourself-lesson-player:hover .schoolyourself-review-icon > img {
+.schoolyourself-lesson-player:hover .schoolyourself-review-box {
   opacity: 1;
+}
+
+.schoolyourself-review-icon {
+  width: 200px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+
+.centerfix {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.schoolyourself-review-icon > img {
+  vertical-align: middle;
+  width: 100px;
+}
+
+.schoolyourself-caption {
+  padding: 10px;
+  margin-bottom: 20px;
+  color: #737c95;
+  font-weight: bold;
+}
+
+.schoolyourself-caption-button {
+  padding: 10px;
+  background: #f0b300;
+  border-radius: 5px;
+  border: 1px solid #fcd800;
+  font-weight: bold;
+  margin-top: 20px;
+  color: #fff;
 }

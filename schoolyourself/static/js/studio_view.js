@@ -2,6 +2,7 @@ function SchoolYourselfStudioView(runtime, element) {
   $('.save-button').bind('click', function() {
     var data = {
       'module_id': $('.module-id', element).val(),
+      'module_title': $('.module-title', element).val(),
       'player_type': $('.player-type', element).val(),
       'shared_key': $('.shared-key', element).val(),
     };

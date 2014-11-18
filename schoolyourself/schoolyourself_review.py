@@ -38,6 +38,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       context = {
         "iframe_url": "%s/review/player?%s" % (self.base_url,
                                                urllib.urlencode(url_params)),
+        "module_title": self.module_title,
         "icon_url": self.runtime.local_resource_url(self,
                                                     "public/review_icon.png")
       }
