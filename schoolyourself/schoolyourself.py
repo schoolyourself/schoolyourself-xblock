@@ -48,6 +48,13 @@ class SchoolYourselfXBlock(XBlock):
       display_name="SY Module name",
       enforce_type=True)
 
+    module_description = String(
+      help=("The description text to display underneath the title."),
+      scope=Scope.settings,
+      default="Welcome to School Yourself!",
+      display_name="SY Module description",
+      enforce_type=True)
+
     base_url = String(
       help=("The base URL that the iframes will be pointing to. Do not put "
             "URL params here -- those get added by the view."),
@@ -142,6 +149,7 @@ class SchoolYourselfXBlock(XBlock):
       context = {
         "module_id": self.module_id,
         "module_title": self.module_title,
+        "module_description": self.module_description,
         "shared_key": self.shared_key,
       }
 
@@ -161,9 +169,12 @@ class SchoolYourselfXBlock(XBlock):
       """
       self.module_id = data.get("module_id", "intro/intro_module")
       self.module_title = data.get("module_title", "Introduction")
+      self.module_description = data.get("module_description",
+                                         "Welcome to School Yourself!")
       if "shared_key" in data:
         self.shared_key = data.get("shared_key")
 
       return { "module_id": self.module_id,
                "module_title": self.module_title,
+               "module_description": self.module_description,
                "shared_key": self.shared_key }

@@ -39,9 +39,9 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       context = {
         "iframe_url": "%s/review/embed?%s" % (self.base_url,
                                               urllib.urlencode(url_params)),
-        "module_title": self.module_title,
+        "title": self.module_title,
         "icon_url": self.runtime.local_resource_url(self,
-                                                    "public/review_icon.jpg")
+                                                    "public/review_icon.png")
       }
 
       # Now actually render the fragment, which is just a button with
@@ -61,6 +61,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
           "static/js/review_student_view.js"))
       fragment.add_css(self.resource_string(
           "static/css/student_view.css"))
+      fragment.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:700,400,300")
       fragment.initialize_js("SchoolYourselfReviewStudentView")
       return fragment
 

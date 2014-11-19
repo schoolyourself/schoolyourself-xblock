@@ -3,6 +3,7 @@ function SchoolYourselfStudioView(runtime, element) {
     var data = {
       'module_id': $('.module-id', element).val(),
       'module_title': $('.module-title', element).val(),
+      'module_description': $('.module-description', element).val(),
       'player_type': $('.player-type', element).val(),
       'shared_key': $('.shared-key', element).val(),
     };

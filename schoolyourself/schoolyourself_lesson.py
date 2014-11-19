@@ -34,7 +34,9 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
       context = {
         "iframe_url": "%s/page/player?%s" % (self.base_url,
                                              urllib.urlencode(url_params)),
-        "screenshot_url": screenshot_url
+        "screenshot_url": screenshot_url,
+        "title": self.module_title,
+        "description": self.module_description
       }
 
       # Now actually render the fragment, which is just a button with
@@ -47,6 +49,8 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
         self.runtime.local_resource_url(self, "public/sylib.css"))
       fragment.add_javascript_url(
         self.runtime.local_resource_url(self, "public/sylib.js"))
+
+      fragment.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:700,400,300")
 
       # And finally the embedded HTML/JS code:
       fragment.add_javascript(self.resource_string(
@@ -68,6 +72,7 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
                   base_url="https://dev.schoolyourself.org"
                   module_id="algebra/multiplication"
                   module_title="Multiplication"
+                  module_description="Multiplying positive numbers, in any order"
                   shared_key="test"
               />
             </vertical_demo>
