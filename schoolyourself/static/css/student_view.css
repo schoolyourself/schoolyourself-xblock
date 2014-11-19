@@ -95,28 +95,32 @@
   margin-bottom: 5px;
   height: 44px;
   max-width: 320px;
-  opacity: 0;
 }
 
-.schoolyourself-review-mastery-text {}
 .schoolyourself-review-mastery-bar {
   width: 320px;
   background: #ddd;
   height: 20px;
   position: relative;
+
+  -webkit-transition: background 450ms ease-in-out;
+  -moz-transition: background 450ms ease-in-out;
+  -ms-transition: background 450ms ease-in-out;
+  -o-transition: background 450ms ease-in-out;
+  transition: background 450ms ease-in-out;
 }
 
 .schoolyourself-review-mastery-bar-filler {
   position: absolute;
-  background: #6eb535;
+  background: #fcd380;
   left: 0;
   right: 100%;
   top: 0;
   bottom: 0;
 
-  -webkit-transition: right 450ms ease-in-out;
-  -moz-transition: right 450ms ease-in-out;
-  -ms-transition: right 450ms ease-in-out;
-  -o-transition: right 450ms ease-in-out;
-  transition: right 450ms ease-in-out;
+  -webkit-transition: all 450ms ease-in-out;
+  -moz-transition: all 450ms ease-in-out;
+  -ms-transition: all 450ms ease-in-out;
+  -o-transition: all 450ms ease-in-out;
+  transition: all 450ms ease-in-out;
 }

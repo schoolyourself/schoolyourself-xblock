@@ -20,11 +20,9 @@ function SchoolYourselfReviewStudentView(runtime, element) {
 
 function renderMastery(masteries) {
   var mastery = masteries[0][1];
-  var scaledMastery = Math.min(mastery / 0.7, 1);
-  var right = (100 - (scaledMastery * 100)) + '%';
+  var right = (100 - (mastery * 100)) + '%';
 
-  $('.schoolyourself-review-mastery').css('opacity', 1);
-
+  var bg = '#ddd';
   if (!mastery) {
     var text = 'Get started!';
     var color = '#fcd380';
@@ -35,16 +33,19 @@ function renderMastery(masteries) {
     var text = 'Almost there!';
     var color = '#f0b300';
   } else if (mastery < 1) {
-    var text = 'Complete!';
+    var text = 'Full credit!';
     var color = '#6eb535';
+    var bg = '#a1d775';
   } else {
     var text = 'Mastered!';
     var color = '#6eb535';
+    var bg = '#a1d775';
   }
 
   $('.schoolyourself-review-mastery-text').html(text);
   $('.schoolyourself-review-mastery-bar-filler').css('right', right);
   $('.schoolyourself-review-mastery-bar-filler').css('background', color);
+  $('.schoolyourself-review-mastery-bar').css('background', bg);
 }
 
 function updateMastery() {

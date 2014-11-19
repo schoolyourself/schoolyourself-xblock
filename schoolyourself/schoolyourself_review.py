@@ -108,9 +108,10 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
 
       # If we got here, then everything checks out and we can submit
       # a grade for this module.
+      scaled_mastery_level = min(mastery_level / 0.7, 1.0)
       self.runtime.publish(self, "grade",
-                           { "value": mastery_level,
-                             "max_value": 0.7 })
+                           { "value": scaled_mastery_level,
+                             "max_value": 1.0 })
 
 
     @staticmethod
