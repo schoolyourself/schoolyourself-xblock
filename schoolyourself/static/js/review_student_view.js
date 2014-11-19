@@ -20,16 +20,15 @@ function SchoolYourselfReviewStudentView(runtime, element) {
 
 function renderMastery(masteries) {
   var mastery = masteries[0][1];
-  if (!mastery) {
-    return;
-  }
-
   var scaledMastery = Math.min(mastery / 0.7, 1);
   var right = (100 - (scaledMastery * 100)) + '%';
 
   $('.schoolyourself-review-mastery').css('opacity', 1);
 
-  if (mastery < 0.35) {
+  if (!mastery) {
+    var text = 'Get started!';
+    var color = '#fcd380';
+  } else if (mastery < 0.35) {
     var text = 'Keep practicing!';
     var color = '#fcd380';
   } else if (mastery < 0.7) {
