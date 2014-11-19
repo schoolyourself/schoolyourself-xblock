@@ -95,8 +95,10 @@
   margin-bottom: 5px;
   height: 44px;
   max-width: 320px;
+  opacity: 0;
 }
 
+.schoolyourself-review-mastery-text {}
 .schoolyourself-review-mastery-bar {
   width: 320px;
   background: #ddd;
@@ -108,7 +110,13 @@
   position: absolute;
   background: #6eb535;
   left: 0;
-  right: 50%;
+  right: 100%;
   top: 0;
   bottom: 0;
+
+  -webkit-transition: right 450ms ease-in-out;
+  -moz-transition: right 450ms ease-in-out;
+  -ms-transition: right 450ms ease-in-out;
+  -o-transition: right 450ms ease-in-out;
+  transition: right 450ms ease-in-out;
 }

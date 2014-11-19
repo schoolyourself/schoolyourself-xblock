@@ -29,20 +29,29 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       """
       # Construct the URL we're going to stuff into the iframe once
       # it gets launched:
-      url_params = self.get_partner_url_params(self.shared_key)
-      url_params["module"] = self.module_id
+      partner_url_params = self.get_partner_url_params(self.shared_key)
+
+      iframe_url_params = dict(partner_url_params)
+      iframe_url_params["module"] = self.module_id
+
+      mastery_url_params = dict(partner_url_params)
+      mastery_url_params["tags"] = self.module_id
 
       # Set up the screenshot URL:
       screenshot_url = "%s/page/screenshot/%s" % (self.base_url,
                                                   self.module_id)
 
       context = {
-        "iframe_url": "%s/review/embed?%s" % (self.base_url,
-                                              urllib.urlencode(url_params)),
+        "iframe_url": "%s/review/embed?%s" % (
+            self.base_url, urllib.urlencode(iframe_url_params)),
         "title": self.module_title,
         "icon_url": self.runtime.local_resource_url(self,
                                                     "public/review_icon.png")
       }
+
+
+      mastery_url = "%s/progress/mastery?%s" % (
+          self.base_url, urllib.urlencode(mastery_url_params))
 
       # Now actually render the fragment, which is just a button with
       # some JS code that handles the click event on that button.
@@ -62,7 +71,8 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       fragment.add_css(self.resource_string(
           "static/css/student_view.css"))
       fragment.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:700,400,300")
-      fragment.initialize_js("SchoolYourselfReviewStudentView")
+      fragment.initialize_js("SchoolYourselfReviewStudentView",
+                             {"mastery_url": mastery_url})
       return fragment
 
 
