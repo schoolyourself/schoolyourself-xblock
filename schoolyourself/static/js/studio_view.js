@@ -6,6 +6,7 @@ function SchoolYourselfStudioView(runtime, element) {
       'module_description': $('.module-description', element).val(),
       'player_type': $('.player-type', element).val(),
       'shared_key': $('.shared-key', element).val(),
+      'base_url': $('.base-url', element).val()
     };
     var handlerUrl = runtime.handlerUrl(element, 'studio_submit');
     $.post(handlerUrl, JSON.stringify(data)).complete(function() {

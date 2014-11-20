@@ -151,6 +151,7 @@ class SchoolYourselfXBlock(XBlock):
         "module_title": self.module_title,
         "module_description": self.module_description,
         "shared_key": self.shared_key,
+        "base_url": self.base_url
       }
 
       fragment = Fragment(self.render_template("studio_view.html", context))
@@ -171,10 +172,13 @@ class SchoolYourselfXBlock(XBlock):
       self.module_title = data.get("module_title", "Introduction")
       self.module_description = data.get("module_description",
                                          "Welcome to School Yourself!")
+      self.base_url = data.get("base_url",
+                               "https://schoolyourself.org")
       if "shared_key" in data:
         self.shared_key = data.get("shared_key")
 
       return { "module_id": self.module_id,
                "module_title": self.module_title,
                "module_description": self.module_description,
-               "shared_key": self.shared_key }
+               "shared_key": self.shared_key,
+               "base_url": self.base_url }
