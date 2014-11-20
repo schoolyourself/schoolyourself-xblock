@@ -58,7 +58,7 @@ class SchoolYourselfXBlock(XBlock):
     base_url = String(
       help=("The base URL that the iframes will be pointing to. Do not put "
             "URL params here -- those get added by the view."),
-      default="https://dev.schoolyourself.org",
+      default="https://schoolyourself.org",
       scope=Scope.content,
       display_name="Base URL",
       enforce_type=True)
