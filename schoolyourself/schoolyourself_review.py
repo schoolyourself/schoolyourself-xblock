@@ -41,17 +41,19 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       screenshot_url = "%s/page/screenshot/%s" % (self.base_url,
                                                   self.module_id)
 
+      mastery_url = "%s/progress/mastery?%s" % (
+          self.base_url, urllib.urlencode(mastery_url_params))
+
       context = {
         "iframe_url": "%s/review/embed?%s" % (
             self.base_url, urllib.urlencode(iframe_url_params)),
         "title": self.module_title,
         "icon_url": self.runtime.local_resource_url(self,
-                                                    "public/review_icon.png")
+                                                    "public/review_icon.png"),
+        "mastery_url": mastery_url
       }
 
 
-      mastery_url = "%s/progress/mastery?%s" % (
-          self.base_url, urllib.urlencode(mastery_url_params))
 
       # Now actually render the fragment, which is just a button with
       # some JS code that handles the click event on that button.
@@ -71,8 +73,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       fragment.add_css(self.resource_string(
           "static/css/student_view.css"))
       fragment.add_css_url("//fonts.googleapis.com/css?family=Open+Sans:700,400,300")
-      fragment.initialize_js("SchoolYourselfReviewStudentView",
-                             {"mastery_url": mastery_url})
+      fragment.initialize_js("SchoolYourselfReviewStudentView")
       return fragment
 
 
@@ -87,13 +88,15 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       mastery = data.get("mastery", None)
       user_id = data.get("user_id", None)
       signature = data.get("signature", None)
+
       if not mastery or not user_id or not signature:
-        return
+        return "forbidden"
 
       # Check that the module ID we care about is actually in the data
       # that was sent.
       mastery_level = mastery.get(self.module_id, None)
       if mastery_level is None:
+        return "bad_request"
         return
 
       # Verify the signature.
@@ -104,7 +107,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
 
       # If the signature is invalid, do nothing.
       if signature != verifier.hexdigest():
-        return
+        return "invalid_signature"
 
       # If we got here, then everything checks out and we can submit
       # a grade for this module.
@@ -112,6 +115,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       self.runtime.publish(self, "grade",
                            { "value": scaled_mastery_level,
                              "max_value": 1.0 })
+      return scaled_mastery_level
 
 
     @staticmethod

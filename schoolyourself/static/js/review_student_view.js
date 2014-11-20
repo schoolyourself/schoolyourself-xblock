@@ -12,10 +12,11 @@ function SchoolYourselfReviewStudentView(runtime, element) {
       var handlerUrl = runtime.handlerUrl(element, 'handle_grade');
       $.post(handlerUrl, JSON.stringify(event.data));
     }, false);
-  });
 
-  updateMastery();
-  viewport.addAfterCloseHandler(updateMastery);
+    var masteryUrl = $('.schoolyourself-lesson-player', element)[0].getAttribute('data-mastery-url');
+    updateMastery(masteryUrl);
+    viewport.addAfterCloseHandler(function(){updateMastery(masteryUrl)});
+  });
 }
 
 function renderMastery(masteries) {
@@ -48,12 +49,9 @@ function renderMastery(masteries) {
   $('.schoolyourself-review-mastery-bar').css('background', bg);
 }
 
-function updateMastery() {
-  var args = $.parseJSON($('.xblock_json_init_args').html());
-  var url = args['mastery_url'];
-
+  function updateMastery(masteryUrl) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
+  xhr.open('GET', masteryUrl, true);
   xhr.withCredentials = true;
   xhr.send();
   xhr.onreadystatechange = function(event) {
