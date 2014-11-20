@@ -52,7 +52,7 @@ def package_data(pkg, roots):
 
 
 setup(
-  name="schoolyourself_xblock",
+  name="schoolyourself-xblock",
   version="0.1",
   description="School Yourself lesson player",
   packages=[
