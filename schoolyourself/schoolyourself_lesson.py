@@ -32,7 +32,7 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
                                                   self.module_id)
 
       context = {
-        "iframe_url": "%s/page/player?%s" % (self.base_url,
+        "iframe_url": "%s/page/embed?%s" % (self.base_url,
                                              urllib.urlencode(url_params)),
         "screenshot_url": screenshot_url,
         "title": self.module_title,
