@@ -1,27 +1,50 @@
-<p>
-  Module ID: <input type="text" class="module-id" value="${module_id}"/>
-</p>
+<div class="wrapper-comp-settings is-active editor-with-buttons" id="settings-tab">
+  <ul class="list-input settings-list">
 
-<p>
-  Module title: <input type="text" class="module-title" value="${module_title}"/>
-</p>
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="module-id">Lesson ID</label>
+        <input type="text" class="module-id input setting-input" id="module-id" value="${module_id}"/>
+      </div>
+    </li>
 
-<p>
-  Module description: <input type="text" class="module-description" value="${module_description}"/>
-</p>
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="module-title">Lesson title</label>
+        <input type="text" class="module-title input setting-input" id="module-title" value="${module_title}"/>
+      </div>
+    </li>
 
-<p>
-  Shared key: <input type="text" class="shared-key" value="${shared_key}"/>
-</p>
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="module-description">Description</label>
+        <input type="text" class="module-description input setting-input" id="module-description" value="${module_description}"/>
+      </div>
+    </li>
 
-<p>
-  Base URL: <input type="text" class="base-url" value="${base_url}"/>
-</p>
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="shared-key">Shared key</label>
+        <input type="text" class="shared-key input setting-input" id="shared-key" value="${shared_key}"/>
+      </div>
+    </li>
 
-<p>
-<button class="save-button">Save</button>
-</p>
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="base-url">Base URL</label>
+        <input type="text" class="base-url input setting-input" id="base-url" value="${base_url}"/>
+      </div>
+    </li>
+  </ul>
 
-<p>
-<button class="cancel-button">Cancel</button>
-</p>
+  <div class="xblock-actions">
+    <ul>
+      <li class="action-item">
+        <button class="button action-primary save-button">Save</button>
+      </li>
+      <li class="action-item">
+        <button class="button cancel-button">Cancel</button>
+      </li>
+    </ul>
+  </div>
+</div>

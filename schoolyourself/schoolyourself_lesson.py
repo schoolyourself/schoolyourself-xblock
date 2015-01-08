@@ -69,7 +69,7 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
          """\
             <vertical_demo>
               <schoolyourself_lesson
-                  base_url="https://dev.schoolyourself.org"
+                  base_url="https://schoolyourself.org"
                   module_id="algebra/multiplication"
                   module_title="Multiplication"
                   module_description="Multiplying positive numbers, in any order"
