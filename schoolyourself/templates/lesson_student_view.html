@@ -2,12 +2,12 @@
   <div class="schoolyourself-lesson-player" data-url="${iframe_url}">
     <div class="schoolyourself-lesson-block">
       <div class="schoolyourself-lesson-screenshot">
-        <img src="${screenshot_url}" />
+        <img src="${screenshot_url}" alt="${title | h} screenshot"/>
       </div>
 
       <div class="schoolyourself-lesson-text">
-        <div class="schoolyourself-lesson-title">${title}</div>
-        <div class="schoolyourself-lesson-description">${description}</div>
+        <h1 class="schoolyourself-lesson-title">${title | h}</h1>
+        <div class="schoolyourself-lesson-description">${description | h}</div>
       </div>
     </div>
   </div>
