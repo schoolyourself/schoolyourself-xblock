@@ -124,6 +124,7 @@ schoolyourself.PlayerViewport.prototype.open = function() {
   this.resize();
   addClassName(this.curtain_, 'open');
   this.isOpen_ = true;
+  this.curtain_.focus();
 };
 
 
@@ -135,6 +136,8 @@ schoolyourself.PlayerViewport.prototype.open = function() {
  */
 schoolyourself.PlayerViewport.prototype.openFrame = function(url) {
   var iframe = createDom('iframe', this.scaler_, 'player-viewport-frame');
+  iframe.setAttribute('tabindex', 0);
+
   iframe.src = url;
   iframe.scrolling = 'no';
   this.currentFrame_ = iframe;
@@ -233,7 +236,8 @@ schoolyourself.PlayerViewportBuilder.insert = function(maxWidth, maxHeight) {
                           'player-viewport-curtain');
   var contentContainer = createDiv(curtain, 'player-viewport-content');
 
-  var xButton = createDiv(curtain, 'player-viewport-x');
+  var xButton = createDom('a', curtain, 'player-viewport-x');
+  xButton.href = '#';
   var scaler = createDiv(contentContainer, 'player-viewport-scaler');
 
   contentContainer.style.width = maxWidth + 'px';
