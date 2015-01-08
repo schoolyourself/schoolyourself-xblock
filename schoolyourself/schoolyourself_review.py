@@ -22,6 +22,9 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
     has_score = True
     weight = 1.0
 
+    def get_display_name(self, module_title):
+      return "Review: %s" % module_title
+
     def student_view(self, context=None):
       """
       The primary view of the SchoolYourselfReviewXBlock, shown to students

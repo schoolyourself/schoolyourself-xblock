@@ -17,6 +17,9 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
     has_children = False
     has_score = False
 
+    def get_display_name(self, module_title):
+      return "Lesson: %s" % module_title
+
     def student_view(self, context=None):
       """
       The primary view of the SchoolYourselfLessonXBlock, shown to students

@@ -32,6 +32,12 @@ class SchoolYourselfXBlock(XBlock):
     master the topic, then come back later and get subsequent
     questions wrong.
     """
+    display_name = String(
+      help="The display name of this component.",
+      scope=Scope.settings,
+      default="",
+      display_name="The display name of this component")
+
     module_id = String(
       help=("The full ID of the module as it would appear on "
             "schoolyourself.org, such as 'geometry/lines_rays'."),
@@ -139,6 +145,16 @@ class SchoolYourselfXBlock(XBlock):
       return url_params
 
 
+    def get_display_name(self, module_title):
+      """
+      This method generates a string that is usable as the display name
+      for the component, using the module title (such as "Lines and Rays").
+      By default, we just return the module title, but subclasses might
+      want to do something more specific.
+      """
+      return module_title
+
+
     def studio_view(self, context=None):
       """
       This is the view that content authors will see when they click on the
@@ -176,6 +192,8 @@ class SchoolYourselfXBlock(XBlock):
                                "https://schoolyourself.org")
       if "shared_key" in data:
         self.shared_key = data.get("shared_key")
+
+      self.display_name = self.get_display_name(self.module_title)
 
       return { "module_id": self.module_id,
                "module_title": self.module_title,
