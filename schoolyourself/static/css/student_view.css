@@ -78,6 +78,7 @@
   font-weight: 300;
   color: #6eb535;
   text-decoration: none;
+  margin-bottom: 0;
 }
 .schoolyourself-lesson-block:hover .schoolyourself-lesson-title {
   color: #6eb535;
