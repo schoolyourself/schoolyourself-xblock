@@ -131,7 +131,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
               <schoolyourself_review
                   base_url="https://schoolyourself.org"
                   module_id="algebra/multiplication"
-                  module_title="Multiplication"
+                  module_title="Multiplication, multiplication, multiplication"
                   shared_key="test"
               />
             </vertical_demo>
