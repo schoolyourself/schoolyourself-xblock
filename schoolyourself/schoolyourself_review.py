@@ -89,7 +89,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       publish a "grade" event for this module.
       """
       if not isinstance(data, dict):
-          return "bad request"
+        return "bad request"
 
       mastery = data.get("mastery", None)
       user_id = data.get("user_id", None)
@@ -103,7 +103,6 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       mastery_level = mastery.get(self.module_id, None)
       if mastery_level is None:
         return "bad_request"
-        return
 
       # Verify the signature.
       verifier = hmac.new(str(self.shared_key), user_id)
