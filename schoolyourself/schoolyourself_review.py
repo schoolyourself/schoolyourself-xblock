@@ -88,6 +88,9 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       that the signature is valid. If everything is good, then we'll
       publish a "grade" event for this module.
       """
+      if not isinstance(data, dict):
+          return "bad request"
+
       mastery = data.get("mastery", None)
       user_id = data.get("user_id", None)
       signature = data.get("signature", None)
