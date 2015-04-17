@@ -14,8 +14,9 @@
   cursor: hand;
   cursor: pointer;
   vertical-align: top;
-  text-align: left;
+  text-align: center;
   position: relative;
+  width: 100%;
 }
 
 
@@ -35,10 +36,9 @@
   text-align: center;
   background: #fff;
 
-  float: left;
+  display: inline-block;
   width: 256px;
   height: 192px;
-  display: inline-block;
   margin: 0;
 }
 
@@ -64,10 +64,12 @@
 
 
 .schoolyourself-lesson-text {
+  display: inline-block;
   text-align: left;
   vertical-align: top;
   padding-left: 40px;
   overflow: hidden;
+  max-width: 320px;
 }
 
 .schoolyourself-lesson-title,
@@ -91,7 +93,6 @@
   color: #737c95;
   font-size: 21px;
   margin-bottom: 5px;
-  max-width: 320px;
 }
 
 .schoolyourself-review-mastery {
