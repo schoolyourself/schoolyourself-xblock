@@ -36,7 +36,7 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
 
       context = {
         "iframe_url": "%s/page/embed?%s" % (self.base_url,
-                                             urllib.urlencode(url_params)),
+                                            urllib.urlencode(url_params)),
         "screenshot_url": screenshot_url,
         "title": self.module_title,
         "description": self.module_description
@@ -76,7 +76,8 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
                   module_id="algebra/multiplication"
                   module_title="Multiplication"
                   module_description="Multiplying positive numbers, in any order"
-                  shared_key="test"
+                  shared_key="edx_test"
+                  partner_id="edx_test"
               />
             </vertical_demo>
          """),

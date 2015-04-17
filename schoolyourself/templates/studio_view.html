@@ -4,35 +4,42 @@
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="module-id">Lesson ID</label>
-        <input type="text" class="module-id input setting-input" id="module-id" value="${module_id}"/>
+        <input type="text" class="module-id input setting-input" id="module-id" value="${module_id|h}"/>
       </div>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="module-title">Lesson title</label>
-        <input type="text" class="module-title input setting-input" id="module-title" value="${module_title}"/>
+        <input type="text" class="module-title input setting-input" id="module-title" value="${module_title|h}"/>
       </div>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="module-description">Description</label>
-        <input type="text" class="module-description input setting-input" id="module-description" value="${module_description}"/>
+        <input type="text" class="module-description input setting-input" id="module-description" value="${module_description|h}"/>
       </div>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="shared-key">Shared key</label>
-        <input type="text" class="shared-key input setting-input" id="shared-key" value="${shared_key}"/>
+        <input type="text" class="shared-key input setting-input" id="shared-key" value="${shared_key|h}"/>
       </div>
     </li>
 
     <li class="field comp-setting-entry is-set">
       <div class="wrapper-comp-setting">
         <label class="label setting-label" for="base-url">Base URL</label>
-        <input type="url" class="base-url input setting-input" id="base-url" value="${base_url}"/>
+        <input type="url" class="base-url input setting-input" id="base-url" value="${base_url|h}"/>
+      </div>
+    </li>
+
+    <li class="field comp-setting-entry is-set">
+      <div class="wrapper-comp-setting">
+        <label class="label setting-label" for="partner-id">Partner ID</label>
+        <input type="url" class="partner-id input setting-input" id="partner-id" value="${partner_id|h}"/>
       </div>
     </li>
   </ul>

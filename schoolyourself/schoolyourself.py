@@ -79,6 +79,17 @@ class SchoolYourselfXBlock(XBlock):
       default="",
       enforce_type=True)
 
+    partner_id = String(
+      help=("This is the string that is passed as the partner_id param "
+            "in all URLs that get generated. For School Yourself courses, "
+            "leave this as the default 'edx'. When testing, you may want "
+            "to set this to something else to indicate to the backend that "
+            "the request doesn't count as production traffic."""),
+      scope=Scope.content,
+      display_name="Partner ID",
+      default="edx",
+      enforce_type=True)
+
 
     def get_student_id(self):
       """This is a helper that retrieves the student ID. We need this
@@ -134,7 +145,7 @@ class SchoolYourselfXBlock(XBlock):
       If a shared_key is provided and there is a username to encode,
       we will sign it with the shared key.
       """
-      url_params = {"partner": "edx"}
+      url_params = {"partner": self.partner_id}
       user_id = self.get_student_id()
       if user_id:
         url_params["partner_user_id"] = user_id
@@ -167,7 +178,8 @@ class SchoolYourselfXBlock(XBlock):
         "module_title": self.module_title,
         "module_description": self.module_description,
         "shared_key": self.shared_key,
-        "base_url": self.base_url
+        "base_url": self.base_url,
+        "partner_id": self.partner_id
       }
 
       fragment = Fragment(self.render_template("studio_view.html", context))
@@ -195,8 +207,12 @@ class SchoolYourselfXBlock(XBlock):
 
       self.display_name = self.get_display_name(self.module_title)
 
+      if "partner_id" in data:
+        self.partner_id = data.get("partner_id")
+
       return { "module_id": self.module_id,
                "module_title": self.module_title,
                "module_description": self.module_description,
                "shared_key": self.shared_key,
-               "base_url": self.base_url }
+               "base_url": self.base_url,
+               "partner_id": self.partner_id }

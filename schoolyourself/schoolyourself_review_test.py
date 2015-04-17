@@ -104,5 +104,19 @@ class SchoolYourselfReviewXBlockTest(unittest.TestCase):
                                                    "max_value": 1.0 })
 
 
+  def test_get_partner_url_params(self):
+    # These are the defaults:
+    self.assertEqual(self.block.get_partner_url_params(),
+                     { "partner": "edx",
+                       "partner_user_id": "debug" })
+
+    self.block.partner_id = "foo"
+    self.block.xmodule_runtime = FakeXModuleRuntime("abc123")
+
+    self.assertEqual(self.block.get_partner_url_params(),
+                     { "partner": "foo",
+                       "partner_user_id": "abc123" })
+
+
 if __name__ == "__main__":
   unittest.main()

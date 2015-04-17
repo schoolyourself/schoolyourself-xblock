@@ -158,8 +158,9 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
               <schoolyourself_review
                   base_url="https://schoolyourself.org"
                   module_id="algebra/multiplication"
-                  module_title="Multiplication, multiplication, multiplication"
-                  shared_key="test"
+                  module_title="Multiplication, Multiplication, 'Multiplication'"
+                  shared_key="edx_test"
+                  partner_id="edx_test"
               />
             </vertical_demo>
          """),
