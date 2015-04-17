@@ -87,9 +87,19 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       We will verify the message to make sure that it is signed and
       that the signature is valid. If everything is good, then we'll
       publish a "grade" event for this module.
+
+      The actual work is done in handle_grade_json(), and this method
+      just calls that. This method is just here so that it can be wrapped
+      by XBlock.json_handler, but the unit test covers the code in
+      handle_grade_json() to avoid having to wrap everything around a
+      Request/Response object.
       """
+      return self.handle_grade_json(data)
+
+
+    def handle_grade_json(self, data):
       if not isinstance(data, dict):
-        return "bad request"
+        return "bad_request"
 
       mastery = data.get("mastery", None)
       user_id = data.get("user_id", None)
@@ -104,11 +114,26 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       if mastery_level is None:
         return "bad_request"
 
+      try:
+        # The mastery level being passed in should be a number, otherwise
+        # things later on in this method will choke.
+        mastery_level = float(mastery_level)
+      except:
+        return "bad_request"
+
       # Verify the signature.
       verifier = hmac.new(str(self.shared_key), user_id)
       for key in sorted(mastery):
         verifier.update(key)
+
+        # Every entry should be a number.
+        try:
+          mastery[key] = float(mastery[key])
+        except:
+          return "bad_request"
+
         verifier.update("%.2f" % mastery[key])
+
 
       # If the signature is invalid, do nothing.
       if signature != verifier.hexdigest():
