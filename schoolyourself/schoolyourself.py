@@ -145,7 +145,13 @@ class SchoolYourselfXBlock(XBlock):
       If a shared_key is provided and there is a username to encode,
       we will sign it with the shared key.
       """
-      url_params = {"partner": self.partner_id}
+      if not self.partner_id:
+        # Default to "edx" if there's nothing set.
+        partner_id = "edx"
+      else:
+        partner_id = self.partner_id
+
+      url_params = {"partner": partner_id}
       user_id = self.get_student_id()
       if user_id:
         url_params["partner_user_id"] = user_id
