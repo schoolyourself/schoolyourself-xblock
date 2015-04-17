@@ -118,7 +118,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         # The mastery level being passed in should be a number, otherwise
         # things later on in this method will choke.
         mastery_level = float(mastery_level)
-      except:
+      except ValueError:
         return "bad_request"
 
       # Verify the signature.
@@ -129,7 +129,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         # Every entry should be a number.
         try:
           mastery[key] = float(mastery[key])
-        except:
+        except ValueError:
           return "bad_request"
 
         verifier.update("%.2f" % mastery[key])
