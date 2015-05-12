@@ -21,32 +21,30 @@ function SchoolYourselfReviewStudentView(runtime, element) {
 
 function renderMastery(masteries) {
   var mastery = masteries[0][1];
-  var right = (100 - (mastery * 100)) + '%';
 
-  var bg = '#ddd';
-  if (!mastery) {
+  // A mastery level of 0.7 gives full credit -- anything beyond that
+  // doesn't count toward anything. So we should show a full, green bar
+  // when scaledMastery >= 0.7.
+  var scaledMastery = mastery / 0.7;
+
+  var right = (100 - (scaledMastery * 100)) + '%';
+
+  var color = '#fcd380';
+  if (!scaledMastery) {
     var text = 'Get started!';
-    var color = '#fcd380';
-  } else if (mastery < 0.35) {
+  } else if (scaledMastery < 0.5) {
     var text = 'Keep practicing!';
-    var color = '#fcd380';
-  } else if (mastery < 0.7) {
+  } else if (scaledMastery < 1) {
     var text = 'Almost there!';
     var color = '#f0b300';
-  } else if (mastery < 1) {
-    var text = 'Full credit!';
-    var color = '#6eb535';
-    var bg = '#a1d775';
   } else {
-    var text = 'Mastered!';
+    var text = 'Complete!';
     var color = '#6eb535';
-    var bg = '#a1d775';
   }
 
   $('.schoolyourself-review-mastery-text').html(text);
   $('.schoolyourself-review-mastery-bar-filler').css('right', right);
   $('.schoolyourself-review-mastery-bar-filler').css('background', color);
-  $('.schoolyourself-review-mastery-bar').css('background', bg);
 }
 
   function updateMastery(masteryUrl) {
