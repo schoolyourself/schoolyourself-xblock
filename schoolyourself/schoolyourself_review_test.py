@@ -1,8 +1,9 @@
 """This file contains a unit test for the SchoolYourselfReviewXBlock."""
 
+from __future__ import absolute_import
 import unittest
 
-from schoolyourself_review import SchoolYourselfReviewXBlock
+from .schoolyourself_review import SchoolYourselfReviewXBlock
 
 from mock import Mock
 from xblock.fields import ScopeIds

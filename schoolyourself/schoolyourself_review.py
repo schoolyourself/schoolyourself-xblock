@@ -1,13 +1,14 @@
 """An XBlock that displays School Yourself reviews and may publish grades."""
 
+from __future__ import absolute_import
 import hmac
-import urllib
+import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 
 from xblock.core import XBlock
 from xblock.fields import Scope, String
 from xblock.fragment import Fragment
 
-from schoolyourself import SchoolYourselfXBlock
+from .schoolyourself import SchoolYourselfXBlock
 
 
 class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
@@ -45,11 +46,11 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
                                                   self.module_id)
 
       mastery_url = "%s/progress/mastery?%s" % (
-          self.base_url, urllib.urlencode(mastery_url_params))
+          self.base_url, six.moves.urllib.parse.urlencode(mastery_url_params))
 
       context = {
         "iframe_url": "%s/review/embed?%s" % (
-            self.base_url, urllib.urlencode(iframe_url_params)),
+            self.base_url, six.moves.urllib.parse.urlencode(iframe_url_params)),
         "title": self.module_title,
         "icon_url": self.runtime.local_resource_url(self,
                                                     "public/review_icon.png"),
