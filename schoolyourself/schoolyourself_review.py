@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 import hmac
+from six import text_type
 import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 
 from xblock.core import XBlock
@@ -123,6 +124,8 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         return "bad_request"
 
       # Verify the signature.
+      if isinstance(self.shared_key, text_type):
+          self.shared_key = self.shared_key.encode('utf-8')
       verifier = hmac.new(str(self.shared_key), user_id)
       for key in sorted(mastery):
         verifier.update(key)
