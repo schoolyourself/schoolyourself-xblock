@@ -1,13 +1,15 @@
 """An XBlock that displays School Yourself reviews and may publish grades."""
 
+from __future__ import absolute_import
+import hashlib
 import hmac
-import urllib
+import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 
 from xblock.core import XBlock
 from xblock.fields import Scope, String
 from xblock.fragment import Fragment
 
-from schoolyourself import SchoolYourselfXBlock
+from .schoolyourself import SchoolYourselfXBlock
 
 
 class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
@@ -45,11 +47,11 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
                                                   self.module_id)
 
       mastery_url = "%s/progress/mastery?%s" % (
-          self.base_url, urllib.urlencode(mastery_url_params))
+          self.base_url, six.moves.urllib.parse.urlencode(mastery_url_params))
 
       context = {
         "iframe_url": "%s/review/embed?%s" % (
-            self.base_url, urllib.urlencode(iframe_url_params)),
+            self.base_url, six.moves.urllib.parse.urlencode(iframe_url_params)),
         "title": self.module_title,
         "icon_url": self.runtime.local_resource_url(self,
                                                     "public/review_icon.png"),
@@ -122,9 +124,11 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         return "bad_request"
 
       # Verify the signature.
-      verifier = hmac.new(str(self.shared_key), user_id)
+      verifier = hmac.new(bytes(self.shared_key, "utf-8"),
+                          bytes(user_id, "utf-8"),
+                          digestmod=hashlib.md5)
       for key in sorted(mastery):
-        verifier.update(key)
+        verifier.update(bytes(key, "utf-8"))
 
         # Every entry should be a number.
         try:
@@ -132,7 +136,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         except ValueError:
           return "bad_request"
 
-        verifier.update("%.2f" % mastery[key])
+        verifier.update(bytes("%.2f" % mastery[key], "utf-8"))
 
 
       # If the signature is invalid, do nothing.

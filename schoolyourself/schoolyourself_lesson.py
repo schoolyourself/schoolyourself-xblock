@@ -1,11 +1,12 @@
 """An XBlock that displays School Yourself lessons."""
 
-import urllib
+from __future__ import absolute_import
+import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 
 from xblock.core import XBlock
 from xblock.fragment import Fragment
 
-from schoolyourself import SchoolYourselfXBlock
+from .schoolyourself import SchoolYourselfXBlock
 
 
 class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
@@ -36,7 +37,7 @@ class SchoolYourselfLessonXBlock(SchoolYourselfXBlock):
 
       context = {
         "iframe_url": "%s/page/embed?%s" % (self.base_url,
-                                            urllib.urlencode(url_params)),
+                                            six.moves.urllib.parse.urlencode(url_params)),
         "screenshot_url": screenshot_url,
         "title": self.module_title,
         "description": self.module_description
