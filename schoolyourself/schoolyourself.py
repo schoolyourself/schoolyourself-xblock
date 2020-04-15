@@ -9,7 +9,7 @@ from mako.template import Template
 
 from xblock.core import XBlock
 from xblock.fields import Scope, String
-from web_fragments.fragment import Fragment
+from xblock.fragment import Fragment
 
 
 class SchoolYourselfXBlock(XBlock):
