@@ -1,0 +1,9 @@
+# This file describes this Open edX repo, as described in OEP-2:
+# https://open-edx-proposals.readthedocs.io/en/latest/oep-0002-bp-repo-metadata.html#specification
+oeps:
+    oep-2: True
+    oep-7: True
+    oep-18: True
+
+tags:
+    - xblock

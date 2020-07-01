@@ -125,10 +125,10 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
 
       # Verify the signature.
       if isinstance(self.shared_key, text_type):
-          self.shared_key = self.shared_key.encode('utf-8')
-      verifier = hmac.new(str(self.shared_key), user_id)
+        sk = self.shared_key.encode('utf-8')
+      verifier = hmac.new(sk, user_id.encode('utf-8'), digestmod='MD5')
       for key in sorted(mastery):
-        verifier.update(key)
+        verifier.update(key.encode('utf-8'))
 
         # Every entry should be a number.
         try:
@@ -136,7 +136,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         except ValueError:
           return "bad_request"
 
-        verifier.update("%.2f" % mastery[key])
+        verifier.update("%.2f".encode('utf-8') % mastery[key])
 
 
       # If the signature is invalid, do nothing.
