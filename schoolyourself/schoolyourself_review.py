@@ -124,6 +124,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         return "bad_request"
 
       # Verify the signature.
+      sk = self.shared_key
       if isinstance(self.shared_key, text_type):
         sk = self.shared_key.encode('utf-8')
       verifier = hmac.new(sk, user_id.encode('utf-8'), digestmod='MD5')
