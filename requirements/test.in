@@ -1,0 +1,7 @@
+# Requirements for test runs
+-c constraints.txt
+
+-r base.txt
+
+mock
+pytest
