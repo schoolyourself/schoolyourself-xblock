@@ -1,6 +1,5 @@
 """An XBlock that displays School Yourself reviews and may publish grades."""
 
-from __future__ import absolute_import
 import hmac
 from six import text_type
 import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
@@ -125,7 +124,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
 
       # Verify the signature.
       sk = self.shared_key
-      if isinstance(self.shared_key, text_type):
+      if isinstance(self.shared_key, str):
         sk = self.shared_key.encode('utf-8')
       verifier = hmac.new(sk, user_id.encode('utf-8'), digestmod='MD5')
       for key in sorted(mastery):
@@ -137,7 +136,7 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         except ValueError:
           return "bad_request"
 
-        verifier.update("%.2f".encode('utf-8') % mastery[key])
+        verifier.update(b"%.2f" % mastery[key])
 
 
       # If the signature is invalid, do nothing.

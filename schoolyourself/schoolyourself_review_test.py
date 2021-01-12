@@ -1,16 +1,15 @@
 """This file contains a unit test for the SchoolYourselfReviewXBlock."""
 
-from __future__ import absolute_import
 import unittest
 
 from .schoolyourself_review import SchoolYourselfReviewXBlock
 
-from mock import Mock
+from unittest.mock import Mock
 from xblock.fields import ScopeIds
 from xblock.field_data import DictFieldData
 
 
-class FakeXModuleRuntime(object):
+class FakeXModuleRuntime:
   """
   Depending on whether we're running in the LMS or in the XBlock
   workbench, the "xmodule_runtime" attr may or may not be set (in

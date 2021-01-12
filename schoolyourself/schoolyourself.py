@@ -1,6 +1,5 @@
 """The base class for School Yourself XBlocks (lessons and reviews)."""
 
-from __future__ import absolute_import
 import hmac
 import os
 import pkg_resources
