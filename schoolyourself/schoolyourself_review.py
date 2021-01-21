@@ -1,8 +1,8 @@
 """An XBlock that displays School Yourself reviews and may publish grades."""
 
-from __future__ import absolute_import
 import hashlib
 import hmac
+from six import text_type
 import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 
 from xblock.core import XBlock
@@ -124,20 +124,19 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
         return "bad_request"
 
       # Verify the signature.
-      verifier = hmac.new(bytes(self.shared_key, "utf-8"),
-                          bytes(user_id, "utf-8"),
-                          digestmod=hashlib.md5)
+      sk = self.shared_key
+      if isinstance(self.shared_key, str):
+        sk = self.shared_key.encode('utf-8')
+      verifier = hmac.new(sk, user_id.encode('utf-8'), digestmod='MD5')
       for key in sorted(mastery):
-        verifier.update(bytes(key, "utf-8"))
-
+        verifier.update(key.encode('utf-8'))
         # Every entry should be a number.
         try:
           mastery[key] = float(mastery[key])
         except ValueError:
           return "bad_request"
 
-        verifier.update(bytes("%.2f" % mastery[key], "utf-8"))
-
+        verifier.update(b"%.2f" % mastery[key])
 
       # If the signature is invalid, do nothing.
       if signature != verifier.hexdigest():

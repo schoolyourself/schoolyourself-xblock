@@ -1,6 +1,5 @@
 """An XBlock that displays School Yourself lessons."""
 
-from __future__ import absolute_import
 import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
 
 from xblock.core import XBlock
