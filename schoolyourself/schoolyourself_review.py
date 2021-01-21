@@ -1,5 +1,6 @@
 """An XBlock that displays School Yourself reviews and may publish grades."""
 
+import hashlib
 import hmac
 from six import text_type
 import six.moves.urllib.request, six.moves.urllib.parse, six.moves.urllib.error
@@ -129,7 +130,6 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
       verifier = hmac.new(sk, user_id.encode('utf-8'), digestmod='MD5')
       for key in sorted(mastery):
         verifier.update(key.encode('utf-8'))
-
         # Every entry should be a number.
         try:
           mastery[key] = float(mastery[key])
@@ -137,7 +137,6 @@ class SchoolYourselfReviewXBlock(SchoolYourselfXBlock):
           return "bad_request"
 
         verifier.update(b"%.2f" % mastery[key])
-
 
       # If the signature is invalid, do nothing.
       if signature != verifier.hexdigest():

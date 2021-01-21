@@ -1,5 +1,6 @@
 """The base class for School Yourself XBlocks (lessons and reviews)."""
 
+import hashlib
 import hmac
 import os
 import pkg_resources
@@ -8,7 +9,7 @@ from mako.template import Template
 
 from xblock.core import XBlock
 from xblock.fields import Scope, String
-from xblock.fragment import Fragment
+from web_fragments.fragment import Fragment
 
 
 class SchoolYourselfXBlock(XBlock):
@@ -156,8 +157,10 @@ class SchoolYourselfXBlock(XBlock):
       if user_id:
         url_params["partner_user_id"] = user_id
         if shared_key:
-          url_params["partner_signature"] = hmac.new(str(shared_key),
-                                                     user_id).hexdigest()
+          url_params["partner_signature"] = hmac.new(
+              bytes(shared_key, "utf-8"),
+              bytes(user_id, "utf-8"),
+              digestmod=hashlib.md5).hexdigest()
 
       return url_params
 
