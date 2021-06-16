@@ -4,14 +4,47 @@
 #
 #    make upgrade
 #
-appdirs==1.4.4            # via -r requirements/tox.txt, virtualenv
-distlib==0.3.1            # via -r requirements/tox.txt, virtualenv
-filelock==3.0.12          # via -r requirements/tox.txt, tox, virtualenv
-packaging==20.8           # via -r requirements/tox.txt, tox
-pluggy==0.13.1            # via -r requirements/tox.txt, tox
-py==1.10.0                # via -r requirements/tox.txt, tox
-pyparsing==2.4.7          # via -r requirements/tox.txt, packaging
-six==1.15.0               # via -r requirements/tox.txt, tox, virtualenv
-toml==0.10.2              # via -r requirements/tox.txt, tox
-tox==3.21.0               # via -r requirements/tox.txt
-virtualenv==20.3.0        # via -r requirements/tox.txt, tox
+appdirs==1.4.4
+    # via
+    #   -r requirements/tox.txt
+    #   virtualenv
+distlib==0.3.2
+    # via
+    #   -r requirements/tox.txt
+    #   virtualenv
+filelock==3.0.12
+    # via
+    #   -r requirements/tox.txt
+    #   tox
+    #   virtualenv
+packaging==20.9
+    # via
+    #   -r requirements/tox.txt
+    #   tox
+pluggy==0.13.1
+    # via
+    #   -r requirements/tox.txt
+    #   tox
+py==1.10.0
+    # via
+    #   -r requirements/tox.txt
+    #   tox
+pyparsing==2.4.7
+    # via
+    #   -r requirements/tox.txt
+    #   packaging
+six==1.16.0
+    # via
+    #   -r requirements/tox.txt
+    #   tox
+    #   virtualenv
+toml==0.10.2
+    # via
+    #   -r requirements/tox.txt
+    #   tox
+tox==3.23.1
+    # via -r requirements/tox.txt
+virtualenv==20.4.7
+    # via
+    #   -r requirements/tox.txt
+    #   tox
