@@ -3,3 +3,4 @@ include AUTHORS
 include README.md
 recursive-include schoolyourself *.css *.py *.js *.html
 include requirements/base.in
+include requirements/constraints.txt
