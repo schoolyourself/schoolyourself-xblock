@@ -1,9 +1,0 @@
-language: python
-python:
-  - '3.8'
-env:
-  - TOXENV=testenv
-install:
-  - pip install -r requirements/travis.txt
-script:
-  - tox
