@@ -13,14 +13,13 @@
 
 
 # using LTS django version
-Django<2.3
+Django<4.0
 
-# docutils version 0.17 is causing docs rendering to fail
-# See https://sourceforge.net/p/docutils/bugs/417/
-docutils==0.16
+# elasticsearch>=7.14.0 includes breaking changes in it which caused issues in discovery upgrade process.
+# elastic search changelog: https://www.elastic.co/guide/en/enterprise-search/master/release-notes-7.14.0.html
+elasticsearch<7.14.0
 
-# latest version is causing e2e failures in edx-platform.
-drf-jwt<1.19.1
+setuptools<60
 
-# Newer versions causing tests failures in multiple repos.
-pyjwt[crypto]==1.7.1
+# django-simple-history>3.0.0 adds indexing and causes a lot of migrations to be affected
+django-simple-history==3.0.0
